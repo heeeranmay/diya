@@ -1,0 +1,194 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Minimal Starry Video Website</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    height:100vh;
+    overflow:hidden;
+    font-family:Arial, sans-serif;
+    background:#000;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+    color:white;
+}
+
+/* STAR BACKGROUND */
+.stars{
+    position:absolute;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    z-index:1;
+}
+
+.star{
+    position:absolute;
+    background:white;
+    border-radius:50%;
+    animation:twinkle linear infinite;
+    opacity:0.8;
+}
+
+@keyframes twinkle{
+    0%,100%{
+        opacity:0.2;
+        transform:scale(0.8);
+    }
+    50%{
+        opacity:1;
+        transform:scale(1.2);
+    }
+}
+
+/* CENTER CONTENT */
+.content{
+    position:relative;
+    z-index:2;
+    text-align:center;
+    padding:20px;
+}
+
+h1{
+    font-size:3rem;
+    font-weight:300;
+    margin-bottom:15px;
+    letter-spacing:2px;
+}
+
+p{
+    font-size:1rem;
+    opacity:0.7;
+    margin-bottom:30px;
+}
+
+/* BUTTON */
+.play-btn{
+    padding:16px 38px;
+    border:none;
+    border-radius:50px;
+    background:white;
+    color:black;
+    font-size:1rem;
+    cursor:pointer;
+    transition:0.3s ease;
+    font-weight:bold;
+}
+
+.play-btn:hover{
+    transform:scale(1.05);
+}
+
+/* FULLSCREEN VIDEO */
+video{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:none;
+    z-index:999;
+    background:black;
+}
+
+/* MOBILE RESPONSIVE */
+@media(max-width:768px){
+
+    h1{
+        font-size:2rem;
+    }
+
+    p{
+        font-size:0.9rem;
+    }
+
+    .play-btn{
+        padding:14px 28px;
+        font-size:0.9rem;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- STAR BACKGROUND -->
+<div class="stars" id="stars"></div>
+
+<!-- CONTENT -->
+<div class="content">
+    <h1>Starry Night✨</h1>
+    <p>Cinematic Fullscreen🎬</p>
+
+    <button class="play-btn" onclick="playVideo()">
+        Play Video
+    </button>
+</div>
+
+<!-- VIDEO -->
+<video id="myVideo" autoplay playsinline>
+    <source src="video.mp4" type="video/mp4">
+</video>
+
+<script>
+
+/* CREATE STARS */
+const starsContainer = document.getElementById("stars");
+
+for(let i=0; i<120; i++){
+
+    const star = document.createElement("div");
+    star.classList.add("star");
+
+    let size = Math.random()*3;
+
+    star.style.width = size + "px";
+    star.style.height = size + "px";
+
+    star.style.top = Math.random()*100 + "%";
+    star.style.left = Math.random()*100 + "%";
+
+    star.style.animationDuration =
+        (Math.random()*3 + 2) + "s";
+
+    starsContainer.appendChild(star);
+}
+
+/* PLAY VIDEO FULLSCREEN */
+function playVideo(){
+
+    const video = document.getElementById("myVideo");
+
+    video.style.display = "block";
+
+    video.play();
+
+    // Fullscreen
+    if(video.requestFullscreen){
+        video.requestFullscreen();
+    }
+    else if(video.webkitRequestFullscreen){
+        video.webkitRequestFullscreen();
+    }
+    else if(video.msRequestFullscreen){
+        video.msRequestFullscreen();
+    }
+}
+
+</script>
+
+</body>
+</html>
